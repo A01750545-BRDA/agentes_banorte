@@ -51,7 +51,10 @@ async def main(websocket: WebSocket):
         if user_input.lower() == 'bye':
             break
         elif user_input.lower() == 'r':
+            websocket.send_text(f'Ejecución de agente {state['current_agent']} terminada. Ingrese su nueva petición.')
+            
             state['current_agent'] = None
+            user_input = await websocket.receive_text()
         
         state['input'] = user_input
         state = await orchestrator_graph.ainvoke(state)
